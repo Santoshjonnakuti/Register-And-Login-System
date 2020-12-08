@@ -120,8 +120,8 @@ def login_user():
         Label(screen2,text='__________No such user exists___________',fg='red').grid(row=5,column=1)
     elif pasw!=record[1]:
         # else display: 'wrong password'
-        Label(screen3,text='________Wrong password entered________',fg='red').grid(row=5,column=1)
-
+        Label(screen2,text='________Wrong password entered________',fg='red').grid(row=5,column=1)
+        
     conn.commit()
     conn.close()
 
