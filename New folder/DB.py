@@ -20,7 +20,6 @@ def deleteUser(userName):
     cur.execute('''DELETE FROM Username_Passwords_DB WHERE Username=?''', (userName,))
     conn.commit()
     conn.close()
-    print("Successfully deleted the users with username {}".format(userName))
     return
 
 
@@ -32,7 +31,6 @@ def updatePassword(userName, password):
     cur.execute('''UPDATE Username_Passwords_DB SET Password=? WHERE Username=?''', (password, userName))
     conn.commit()
     conn.close()
-    print("Done...")
     return
 
 
@@ -43,5 +41,4 @@ def getDetails(userName):
                 (Username text, Password text)''')
     cur.execute('''SELECT * FROM Username_Passwords_DB WHERE Username=?''', (userName,))
     details = cur.fetchall()
-    print(details)
     return details[0]
