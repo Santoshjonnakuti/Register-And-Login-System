@@ -71,7 +71,6 @@ def logInButtonFunction():
                 (Username text, Password text)''')
     cur.execute('''SELECT * FROM Username_Passwords_DB WHERE Username=?''', (uName, ))
     credinals = cur.fetchall()
-    print(credinals)
     if len(credinals) == 0:
         logInErrorLabel["text"] = "User not Found..."
         logInErrorLabel.place(x=500, y=650, anchor=tk.CENTER)
@@ -96,10 +95,7 @@ def logInButtonFunction():
         forgetSAnsEntry.place_forget()
         forgetOkButton.place_forget()
         forgetBackButton.place_forget()
-        print("Login Successful...")
-        print(credinals)
         message = '''Welcome {} {}!\nMobile : {}\nDate of Birth : {}\nE-mail id : {}'''.format(credinals[0][1], credinals[0][2], credinals[0][3], credinals[0][4], credinals[0][0])
-        print(message)
         logInMessageLabel["text"] = message
         logInMessageLabel.place(x=800, y=400, anchor=tk.CENTER)
         logOutButton.place(x=800, y=550, anchor=tk.CENTER)
@@ -140,6 +136,11 @@ def signUpBackFunction():
     forgetOkButton.place_forget()
     forgetBackButton.place_forget()
     forgetOkButtonErrorLabel.place_forget()
+    forgetPwdEntry.place_forget()
+    forgetRPwdEntry.place_forget()
+    confirmLabel.place_forget()
+    confirmButton.place_forget()
+    confirmBackButton.place_forget()
     logInLabel.place(x=330, y=250, anchor=tk.CENTER)
     userNameEntryLabel.place(x=350, y=300, anchor=tk.CENTER)
     userNameEntry.place(x=485, y=350, anchor=tk.CENTER)
@@ -168,11 +169,11 @@ def signUpRegisterFunction():
     forgetSAnsEntry.place_forget()
     forgetOkButton.place_forget()
     forgetBackButton.place_forget()
+    confirmLabel.place_forget()
+    confirmButton.place_forget()
+    confirmBackButton.place_forget()
     mbStr = str(mobile)
-    print(len(fName), len(lName), len(eMail), len(mbStr), len(sAns), len(pwd), len(rePwd))
-    print(fName, lName, eMail, mobile, dob, sQues, sAns, pwd, rePwd)
     if len(fName) == 0 or len(lName) == 0 or len(eMail) == 0 or len(mbStr) == 0 or len(sQues) == 0 or len(sAns) == 0 or len(pwd) == 0 or len(rePwd) == 0:
-        print("Hello")
         registerErrorLabel["text"] = "Please Fill all the above Entries..."
         registerErrorLabel.place(x=500, y=650, anchor=tk.CENTER)
         return
@@ -243,6 +244,9 @@ def logOutButtonFunction():
     forgetSAnsEntry.place_forget()
     forgetOkButton.place_forget()
     forgetBackButton.place_forget()
+    confirmLabel.place_forget()
+    confirmButton.place_forget()
+    confirmBackButton.place_forget()
     logInLabel.place(x=330, y=250, anchor=tk.CENTER)
     userNameEntryLabel.place(x=350, y=300, anchor=tk.CENTER)
     userNameEntry.place(x=485, y=350, anchor=tk.CENTER)
@@ -261,7 +265,6 @@ def deleteAccountFunction():
     lst = details.split("\n")
     userName = lst[3][12:]
     data = DB.getDetails(userName)
-    print(data)
     logInMessageLabel.place_forget()
     logOutButton.place_forget()
     deleteAccountButton.place_forget()
@@ -269,6 +272,9 @@ def deleteAccountFunction():
     forgetSAnsEntry.place_forget()
     forgetOkButton.place_forget()
     forgetBackButton.place_forget()
+    confirmLabel.place_forget()
+    confirmButton.place_forget()
+    confirmBackButton.place_forget()
     sQues = data[5]
     sQuesLabel["text"] = sQues
     sQuesLabel.place(x=800, y=400, anchor=tk.CENTER)
@@ -284,7 +290,6 @@ def deleteOkButtonFunction():
     lst = details.split("\n")
     userName = lst[3][12:]
     data = DB.getDetails(userName)
-    print(data)
     logInMessageLabel.place_forget()
     logOutButton.place_forget()
     deleteAccountButton.place_forget()
@@ -292,6 +297,9 @@ def deleteOkButtonFunction():
     forgetSAnsEntry.place_forget()
     forgetOkButton.place_forget()
     forgetBackButton.place_forget()
+    confirmLabel.place_forget()
+    confirmButton.place_forget()
+    confirmBackButton.place_forget()
     sAns = data[6]
     ans = sAnsEntry.get()
     if ans == sAns:
@@ -356,6 +364,7 @@ def forgetOkButtonFunction():
         forgetPwdEntry.place(x=800, y=400, anchor=tk.CENTER)
         forgetRPwdEntry.place(x=800, y=450, anchor=tk.CENTER)
         confirmButton.place(x=800, y=500, anchor=tk.CENTER)
+        confirmBackButton.place(x=740, y=500, anchor=tk.CENTER)
         return
     else:
         forgetOkButtonErrorLabel["text"] = "Wrong Answer..."
@@ -406,7 +415,6 @@ def confirmButtonFunction():
         forgetOkButtonErrorLabel["text"] = "Please Include Lowercase Character in Password..."
         forgetOkButtonErrorLabel.place(x=800, y=550, anchor=tk.CENTER)
         return
-    print(name)
     if pwd == rPwd:
         DB.updatePassword(name, pwd)
         firstNameLabel.place_forget()
@@ -530,4 +538,5 @@ forgetPwdEntry = tk.Entry(root, width=30, font=("Helvetica", 12))
 forgetRPwdEntry = tk.Entry(root, width=30, font=("Helvetica", 12))
 confirmLabel = tk.Label(root, text="Enter your password in the places given below", bg="white", fg="black", font=("Helvetica", 12))
 confirmButton = tk.Button(root, text="Confirm", bg="white", fg="black", font=("Helvetica", 12), cursor="hand2", command=confirmButtonFunction)
+confirmBackButton = tk.Button(root, text="Back", bg="white", fg="black", font=("Helvetica", 12), command=signUpBackFunction)
 root.mainloop()
