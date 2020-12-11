@@ -41,7 +41,7 @@ def getDetails(userName):
                 (Username text, Password text)''')
     cur.execute('''SELECT * FROM Username_Passwords_DB WHERE Username=?''', (userName,))
     details = cur.fetchall()
-        if len(details) == 0:
+    if len(details) == 0:
         return []
     else:
         return details[0]
