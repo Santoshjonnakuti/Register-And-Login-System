@@ -1,4 +1,5 @@
 import sqlite3
+import DB1
 
 
 def newUser(userName, fName, lName, mobile, dOB, sQues, sAns, password):
@@ -20,6 +21,7 @@ def deleteUser(userName):
     cur.execute('''DELETE FROM Username_Passwords_DB WHERE Username=?''', (userName,))
     conn.commit()
     conn.close()
+    DB1.deleteData(userName)
     return
 
 
