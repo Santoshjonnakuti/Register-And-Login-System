@@ -61,6 +61,8 @@ def Function(button):
         updateButton.place_forget()
         deleteButton.place_forget()
         ErrorLabel1.place_forget()
+        searchButton.place_forget()
+        searchEntry.place_forget()
         Label1["text"] = data[5]
         Label1.place(x=800, y=400, anchor=tk.CENTER)
         Entry1.delete(0, tk.END)
@@ -99,6 +101,8 @@ def Function(button):
         applicationEntry.place_forget()
         ErrorLabel1.place_forget()
         messageLabel.place_forget()
+        searchEntry.place_forget()
+        searchButton.place_forget()
         Label1["text"] = "Log in"
         Label1.place(x=332, y=250, anchor=tk.CENTER)
         Label2["text"] = "Email"
@@ -198,6 +202,8 @@ def Function(button):
             DB.updatePassword(name, pwd)
             ErrorLabel["fg"] = "green"
             ErrorLabel["text"] = "Password Updated Successfully...\nGo back and Please Login again..."
+            Entry1.delete(0, tk.END)
+            Entry2.delete(0, tk.END)
             ErrorLabel.place(x=800, y=550, anchor=tk.CENTER)
             return
     elif text == "Log in":
@@ -235,6 +241,8 @@ def Function(button):
             Entry2.place_forget()
             ErrorLabel.place_forget()
             Button3.place_forget()
+            searchEntry.place(x=200, y=280, anchor=tk.CENTER)
+            searchButton.place(x=400, y=280, anchor=tk.CENTER)
             addButton.place(x=80, y=200, anchor=tk.CENTER)
             updateButton.place(x=180, y=200, anchor=tk.CENTER)
             deleteButton.place(x=280, y=200, anchor=tk.CENTER)
@@ -249,7 +257,7 @@ def Function(button):
             Entry2.place(x=450, y=150, anchor=tk.CENTER)
             message = DB1.showAll(data[0])
             messageLabel["text"] = message
-            messageLabel.place(x=400, y=510, anchor=tk.CENTER)
+            messageLabel.place(x=380, y=550, anchor=tk.CENTER)
             Button1["text"] = "Logout"
             Button1.place(x=1400, y=50, anchor=tk.CENTER)
             Button2["text"] = "Delete Account"
@@ -374,6 +382,15 @@ def Function(button):
         DB.newUser(eMail, fName, lName, mbStr, dob, sQues, sAns, pwd)
         ErrorLabel["fg"] = "green"
         ErrorLabel["text"] = "Successfully Registered...\nPlease go back and Log in..."
+        firstNameEntry.delete(0, tk.END)
+        lastNameEntry.delete(0, tk.END)
+        emailIdEntry.delete(0, tk.END)
+        mobileEntry.delete(0, tk.END)
+        dateOfBirthEntry.delete(0, tk.END)
+        securityQuestions.delete(0, tk.END)
+        securityQuesAnsEntry.delete(0, tk.END)
+        passwordEntry1.delete(0, tk.END)
+        reEntryPasswordEntry.delete(0, tk.END)
         ErrorLabel.place(x=500, y=650, anchor=tk.CENTER)
     elif text == "Add":
         application = applicationEntry.get().lower()
@@ -383,7 +400,7 @@ def Function(button):
         message = DB1.addUser(user, application, uname, pwd)
         msg = DB1.showAll(data[0])
         messageLabel["text"] = msg
-        messageLabel.place(x=400, y=510, anchor=tk.CENTER)
+        messageLabel.place(x=380, y=550, anchor=tk.CENTER)
         if message == "Successfully Added...":
             applicationEntry.delete(0, tk.END)
             Entry1.delete(0, tk.END)
@@ -402,7 +419,7 @@ def Function(button):
         message = DB1.updateUser(user, application, uname, pwd)
         msg = DB1.showAll(data[0])
         messageLabel["text"] = msg
-        messageLabel.place(x=400, y=510, anchor=tk.CENTER)
+        messageLabel.place(x=380, y=550, anchor=tk.CENTER)
         if message == "Successfully Updated...":
             applicationEntry.delete(0, tk.END)
             Entry1.delete(0, tk.END)
@@ -419,7 +436,7 @@ def Function(button):
         message = DB1.deleteUser(user, application.lower())
         msg = DB1.showAll(data[0])
         messageLabel["text"] = msg
-        messageLabel.place(x=400, y=510, anchor=tk.CENTER)
+        messageLabel.place(x=380, y=550, anchor=tk.CENTER)
         if message == "Successfully Deleted...":
             applicationEntry.delete(0, tk.END)
             Entry1.delete(0, tk.END)
@@ -429,6 +446,33 @@ def Function(button):
             ErrorLabel1["fg"] = "red"
         ErrorLabel1["text"] = message
         ErrorLabel1.place(x=300, y=250, anchor=tk.CENTER)
+        return
+    elif text == "Search":
+        app = searchEntry.get().lower()
+        if app == "":
+            ErrorLabel1["fg"] = "red"
+            ErrorLabel1["text"] = "Application name cannot be empty..."
+            ErrorLabel1.place(x=300, y=250, anchor=tk.CENTER)
+            return
+        msg = DB1.showAll(data[0])
+        msg = msg.split("\n")
+        stri = "Application" + (" "*29) + "Username" + (" "*32) + "Password" + (" "*32) + "\n"
+        for line in msg[1:]:
+            if app in line:
+                stri += line + "\n"
+            else:
+                continue
+        if stri == "Application" + (" "*29) + "Username" + (" "*32) + "Password" + (" "*32) + "\n":
+            stri += "Not found..."
+        messageLabel["text"] = stri
+        messageLabel.place(x=380, y=550, anchor=tk.CENTER)
+        button["text"] = "Cancel"
+        return
+    elif text == "Cancel":
+        msg = DB1.showAll(data[0])
+        messageLabel["text"] = msg
+        messageLabel.place(x=380, y=550, anchor=tk.CENTER)
+        button["text"] = "Search"
         return
 
 
@@ -487,4 +531,6 @@ applicationLabel = tk.Label(root, text="Application/Website Name", fg="black", b
 applicationEntry = tk.Entry(root, width="40", fg="black", bg="white", font=("Helvetica", 12))
 ErrorLabel1 = tk.Label(root, text="", bg="white", fg="red", font=("Helvetica", 12, "bold"))
 messageLabel = tk.Label(root, text="", bg="white", fg="black", font=("Helvetica", 10), height=30, width=80, anchor=tk.NW, justify=tk.CENTER)
-root.mainloop() 
+searchEntry = tk.Entry(root, width=30, font=("Helvetica", 12), bg="white", fg="black")
+searchButton = tk.Button(root, text="Search", bg="white", fg="black", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(searchButton))
+root.mainloop()
