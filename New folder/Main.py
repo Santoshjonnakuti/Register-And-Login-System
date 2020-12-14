@@ -1,4 +1,3 @@
-import random
 import tkinter as tk
 from tkinter import ttk
 
@@ -61,6 +60,7 @@ def Function(button):
         addButton.place_forget()
         updateButton.place_forget()
         deleteButton.place_forget()
+        ErrorLabel1.place_forget()
         Label1["text"] = data[5]
         Label1.place(x=800, y=400, anchor=tk.CENTER)
         Entry1.delete(0, tk.END)
@@ -101,8 +101,8 @@ def Function(button):
         messageLabel.place_forget()
         Label1["text"] = "Log in"
         Label1.place(x=332, y=250, anchor=tk.CENTER)
-        Label2["text"] = "Username"
-        Label2.place(x=350, y=300, anchor=tk.CENTER)
+        Label2["text"] = "Email"
+        Label2.place(x=330, y=300, anchor=tk.CENTER)
         Entry1.delete(0, tk.END)
         Entry1.place(x=485, y=350, anchor=tk.CENTER)
         Label3["text"] = "Password"
@@ -225,6 +225,8 @@ def Function(button):
             ErrorLabel.place(x=500, y=650, anchor=tk.CENTER)
             return
         elif data[0] == uName and data[7] == pWord:
+            backGroundLabel["image"] = bgImage2
+            backGroundLabel.pack()
             Label1.place_forget()
             Label2.place_forget()
             Label3.place_forget()
@@ -238,6 +240,7 @@ def Function(button):
             deleteButton.place(x=280, y=200, anchor=tk.CENTER)
             applicationLabel.place(x=150, y=50, anchor=tk.CENTER)
             applicationEntry.place(x=450, y=50, anchor=tk.CENTER)
+            Label2["text"] = "Username"
             Label2.place(x=200, y=100, anchor=tk.CENTER)
             Entry1.delete(0, tk.END)
             Entry1.place(x=450, y=100, anchor=tk.CENTER)
@@ -255,6 +258,9 @@ def Function(button):
             Button2.place(x=1400, y=700, anchor=tk.CENTER)
             return
     elif text == "Sign Up":
+        backGroundLabel.pack_forget()
+        backGroundLabel["image"] = bgImage1
+        backGroundLabel.pack()
         ErrorLabel.place_forget()
         Label2.place_forget()
         Label3.place_forget()
@@ -379,6 +385,9 @@ def Function(button):
         messageLabel["text"] = msg
         messageLabel.place(x=400, y=510, anchor=tk.CENTER)
         if message == "Successfully Added...":
+            applicationEntry.delete(0, tk.END)
+            Entry1.delete(0, tk.END)
+            Entry2.delete(0, tk.END)
             ErrorLabel1["fg"] = "green"
         else:
             ErrorLabel1["fg"] = "red"
@@ -395,6 +404,9 @@ def Function(button):
         messageLabel["text"] = msg
         messageLabel.place(x=400, y=510, anchor=tk.CENTER)
         if message == "Successfully Updated...":
+            applicationEntry.delete(0, tk.END)
+            Entry1.delete(0, tk.END)
+            Entry2.delete(0, tk.END)
             ErrorLabel1["fg"] = "green"
         else:
             ErrorLabel1["fg"] = "red"
@@ -409,6 +421,9 @@ def Function(button):
         messageLabel["text"] = msg
         messageLabel.place(x=400, y=510, anchor=tk.CENTER)
         if message == "Successfully Deleted...":
+            applicationEntry.delete(0, tk.END)
+            Entry1.delete(0, tk.END)
+            Entry2.delete(0, tk.END)
             ErrorLabel1["fg"] = "green"
         else:
             ErrorLabel1["fg"] = "red"
@@ -424,12 +439,12 @@ root.geometry("1500x800")
 bgImage = ImageTk.PhotoImage(Image.open('Background.jpg'))
 bgImage1 = ImageTk.PhotoImage(Image.open('Background1.jpg'))
 bgImage2 = ImageTk.PhotoImage(Image.open('Background2.jpg'))
-backGroundLabel = tk.Label(root, image=random.choice([bgImage, bgImage1, bgImage2]))
+backGroundLabel = tk.Label(root, image=bgImage)
 backGroundLabel.pack()
 Label1 = tk.Label(root, text="Log in", bg="white", fg="black", font=("Helvetica", 15))
 Label1.place(x=332, y=250, anchor=tk.CENTER)
-Label2 = tk.Label(root, text="Username", bg="white", fg="black", font=("Helvetica", 15))
-Label2.place(x=350, y=300, anchor=tk.CENTER)
+Label2 = tk.Label(root, text="Email", bg="white", fg="black", font=("Helvetica", 15))
+Label2.place(x=330, y=300, anchor=tk.CENTER)
 Entry1 = tk.Entry(root, width=40, font=("Helvetica", 13))
 Entry1.place(x=485, y=350, anchor=tk.CENTER)
 Label3 = tk.Label(root, text="Password", bg="white", fg="black", font=("Helvetica", 15))
@@ -472,4 +487,4 @@ applicationLabel = tk.Label(root, text="Application/Website Name", fg="black", b
 applicationEntry = tk.Entry(root, width="40", fg="black", bg="white", font=("Helvetica", 12))
 ErrorLabel1 = tk.Label(root, text="", bg="white", fg="red", font=("Helvetica", 12, "bold"))
 messageLabel = tk.Label(root, text="", bg="white", fg="black", font=("Helvetica", 10), height=30, width=80, anchor=tk.NW, justify=tk.CENTER)
-root.mainloop()
+root.mainloop() 
