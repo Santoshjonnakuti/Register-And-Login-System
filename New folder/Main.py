@@ -31,7 +31,6 @@ def Function(button):
             else:
                 Label2.place_forget()
                 Label3.place_forget()
-                Label4.place_forget()
                 Entry2.place_forget()
                 Button3.place_forget()
                 ErrorLabel.place_forget()
@@ -48,9 +47,10 @@ def Function(button):
                 return
     elif text == "Delete Account":
         string = "Delete Account"
+        cancelButton.place_forget()
+        detailsLabel.place_forget()
         Label2.place_forget()
         Label3.place_forget()
-        Label4.place_forget()
         Entry2.place_forget()
         Button3.place_forget()
         ErrorLabel.place_forget()
@@ -76,6 +76,8 @@ def Function(button):
         return
     elif text == "Back" or text == "Logout":
         ErrorLabel.place_forget()
+        cancelButton.place_forget()
+        detailsLabel.place_forget()
         firstNameLabel.place_forget()
         firstNameEntry.place_forget()
         lastNameLabel.place_forget()
@@ -103,6 +105,7 @@ def Function(button):
         messageLabel.place_forget()
         searchEntry.place_forget()
         searchButton.place_forget()
+        backGroundLabel["image"] = bgImage
         Label1["text"] = "Log in"
         Label1.place(x=332, y=250, anchor=tk.CENTER)
         Label2["text"] = "Email"
@@ -119,10 +122,8 @@ def Function(button):
         Button2["font"] = ("Helvetica", 10, "bold")
         Button2["fg"] = "blue"
         Button2.place(x=608, y=500, anchor=tk.CENTER)
-        Label4["text"] = "New User"
-        Label4.place(x=343, y=600, anchor=tk.CENTER)
-        Button3["text"] = "Sign Up"
-        Button3.place(x=420, y=600, anchor=tk.CENTER)
+        Button3["text"] = "Don't have an account? Sign Up"
+        Button3.place(x=400, y=600, anchor=tk.CENTER)
         return
     elif text == "Ok":
         ans = Entry1.get()
@@ -236,7 +237,6 @@ def Function(button):
             Label1.place_forget()
             Label2.place_forget()
             Label3.place_forget()
-            Label4.place_forget()
             Entry1.place_forget()
             Entry2.place_forget()
             ErrorLabel.place_forget()
@@ -264,15 +264,16 @@ def Function(button):
             Button2["fg"] = "red"
             Button2["command"] = lambda: Function(Button2)
             Button2.place(x=1400, y=700, anchor=tk.CENTER)
+            detailsLabel["text"] = "Welcome {} {}!\nDate of Birth : {}\nMobile : {}\nEmail : {}".format(data[1], data[2], data[4], data[3], data[0])
+            detailsLabel.place(x=1000, y=400, anchor=tk.CENTER)
             return
-    elif text == "Sign Up":
+    elif text == "Don't have an account? Sign Up":
         backGroundLabel.pack_forget()
         backGroundLabel["image"] = bgImage1
         backGroundLabel.pack()
         ErrorLabel.place_forget()
         Label2.place_forget()
         Label3.place_forget()
-        Label4.place_forget()
         Entry1.place_forget()
         Entry2.place_forget()
         Button3.place_forget()
@@ -448,12 +449,15 @@ def Function(button):
         ErrorLabel1.place(x=300, y=250, anchor=tk.CENTER)
         return
     elif text == "Search":
+        ErrorLabel1.place_forget()
         app = searchEntry.get().lower()
         if app == "":
             ErrorLabel1["fg"] = "red"
             ErrorLabel1["text"] = "Application name cannot be empty..."
             ErrorLabel1.place(x=300, y=250, anchor=tk.CENTER)
             return
+        searchButton.place(x=500, y=280, anchor=tk.CENTER)
+        cancelButton.place(x=400, y=280, anchor=tk.CENTER)
         msg = DB1.showAll(data[0])
         msg = msg.split("\n")
         stri = "Application" + (" "*29) + "Username" + (" "*32) + "Password" + (" "*32) + "\n"
@@ -466,13 +470,14 @@ def Function(button):
             stri += "Not found..."
         messageLabel["text"] = stri
         messageLabel.place(x=380, y=550, anchor=tk.CENTER)
-        button["text"] = "Cancel"
         return
     elif text == "Cancel":
+        cancelButton.place_forget()
+        searchEntry.delete(0, tk.END)
+        searchButton.place(x=400, y=280, anchor=tk.CENTER)
         msg = DB1.showAll(data[0])
         messageLabel["text"] = msg
         messageLabel.place(x=380, y=550, anchor=tk.CENTER)
-        button["text"] = "Search"
         return
 
 
@@ -499,10 +504,8 @@ Button1 = tk.Button(root, text="Log in", bg="white", fg="black", compound="left"
 Button1.place(x=327, y=550, anchor=tk.CENTER)
 Button2 = tk.Button(root, text="Forgot Password?", bg="white", fg="blue", cursor="hand2", font=("Helvetica", 10, "bold"), command=lambda: Function(Button2))
 Button2.place(x=608, y=500, anchor=tk.CENTER)
-Label4 = tk.Label(root, text="New User", fg="black", bg="white", font=("Helvetica", 12))
-Label4.place(x=343, y=600, anchor=tk.CENTER)
-Button3 = tk.Button(root, text="Sign Up", fg="blue", bg="white", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(Button3))
-Button3.place(x=420, y=600, anchor=tk.CENTER)
+Button3 = tk.Button(root, text="Don't have an account? Sign Up", fg="blue", bg="white", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(Button3))
+Button3.place(x=400, y=600, anchor=tk.CENTER)
 ErrorLabel = tk.Label(root, text="", fg="red", bg="white", font=("Helvetica", 15, "bold"))
 firstNameLabel = tk.Label(root, text="Firstname", bg="white", fg="black", font=("Helvetica", 12))
 firstNameEntry = tk.Entry(root, width=30, font=("Helvetica", 12))
@@ -533,4 +536,6 @@ ErrorLabel1 = tk.Label(root, text="", bg="white", fg="red", font=("Helvetica", 1
 messageLabel = tk.Label(root, text="", bg="white", fg="black", font=("Helvetica", 10), height=30, width=80, anchor=tk.NW, justify=tk.CENTER)
 searchEntry = tk.Entry(root, width=30, font=("Helvetica", 12), bg="white", fg="black")
 searchButton = tk.Button(root, text="Search", bg="white", fg="black", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(searchButton))
+cancelButton = tk.Button(root, text="Cancel", bg="white", fg="black", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(cancelButton))
+detailsLabel = tk.Label(root, text="", bg="white", fg="green", font=("Brush Script M7", 20))
 root.mainloop()
