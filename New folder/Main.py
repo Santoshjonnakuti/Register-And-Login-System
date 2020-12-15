@@ -249,7 +249,7 @@ def Function(button):
             ErrorLabel.place_forget()
             Button3.place_forget()
             searchEntry.place(x=200, y=280, anchor=tk.CENTER)
-            searchButton.place(x=400, y=280, anchor=tk.CENTER)
+            searchButton.place(x=370, y=280, anchor=tk.CENTER)
             addButton.place(x=80, y=200, anchor=tk.CENTER)
             updateButton.place(x=180, y=200, anchor=tk.CENTER)
             deleteButton.place(x=280, y=200, anchor=tk.CENTER)
@@ -264,8 +264,8 @@ def Function(button):
             Entry2.place(x=450, y=150, anchor=tk.CENTER)
             message = DB1.showAll(data[0])
             message = message.split("\n")
-            for item in message:
-                messageListBox.insert(1, item)
+            for i in range(len(message)):
+                messageListBox.insert(i, message[i])
             messageListBox.place(x=350, y=550, anchor=tk.CENTER)
             Button1["text"] = "Logout"
             Button1.place(x=1400, y=100, anchor=tk.CENTER)
@@ -413,8 +413,8 @@ def Function(button):
         msg = DB1.showAll(data[0])
         msg = msg.split("\n")
         messageListBox.delete(0, len(msg))
-        for line in msg:
-            messageListBox.insert(1, line)
+        for i in range(len(msg)):
+            messageListBox.insert(i, msg[i])
         messageListBox.place(x=350, y=550, anchor=tk.CENTER)
         if message == "Successfully Added...":
             applicationEntry.delete(0, tk.END)
@@ -435,8 +435,8 @@ def Function(button):
         msg = DB1.showAll(data[0])
         msg = msg.split("\n")
         messageListBox.delete(0, len(msg))
-        for line in msg:
-            messageListBox.insert(1, line)
+        for i in range(len(msg)):
+            messageListBox.insert(i, msg[i])
         messageListBox.place(x=350, y=550, anchor=tk.CENTER)
         if message == "Successfully Updated...":
             applicationEntry.delete(0, tk.END)
@@ -455,8 +455,8 @@ def Function(button):
         msg = DB1.showAll(data[0])
         msg = msg.split("\n")
         messageListBox.delete(0, len(msg))
-        for line in msg:
-            messageListBox.insert(1, line)
+        for i in range(len(msg)):
+            messageListBox.insert(i, msg[i])
         messageListBox.place(x=350, y=550, anchor=tk.CENTER)
         if message == "Successfully Deleted...":
             applicationEntry.delete(0, tk.END)
@@ -476,8 +476,8 @@ def Function(button):
             ErrorLabel1["text"] = "Application name cannot be empty..."
             ErrorLabel1.place(x=300, y=250, anchor=tk.CENTER)
             return
-        searchButton.place(x=500, y=280, anchor=tk.CENTER)
-        cancelButton.place(x=400, y=280, anchor=tk.CENTER)
+        searchButton.place(x=400, y=280, anchor=tk.CENTER)
+        cancelButton.place(x=370, y=280, anchor=tk.CENTER)
         msg = DB1.showAll(data[0])
         msg = msg.split("\n")
         stri = "Application" + (" "*29) + "Username" + (" "*32) + "Password" + (" "*32) + "\n"
@@ -488,16 +488,22 @@ def Function(button):
                 continue
         if stri == "Application" + (" "*29) + "Username" + (" "*32) + "Password" + (" "*32) + "\n":
             stri += "Not found..."
-        messageListBox["text"] = stri
-        messageListBox.place(x=380, y=550, anchor=tk.CENTER)
+        stri = stri.split("\n")
+        messageListBox.delete(0, len(msg))
+        for i in range(len(stri)):
+            messageListBox.insert(i, stri[i])
+        messageListBox.place(x=350, y=550, anchor=tk.CENTER)
         return
     elif text == "Cancel":
         cancelButton.place_forget()
         searchEntry.delete(0, tk.END)
-        searchButton.place(x=400, y=280, anchor=tk.CENTER)
+        searchButton.place(x=370, y=280, anchor=tk.CENTER)
         msg = DB1.showAll(data[0])
-        messageListBox["text"] = msg
-        messageListBox.place(x=380, y=550, anchor=tk.CENTER)
+        msg = msg.split("\n")
+        messageListBox.delete(0, len(msg))
+        for i in range(len(msg)):
+            messageListBox.insert(i, msg[i])
+        messageListBox.place(x=350, y=550, anchor=tk.CENTER)
         return
 
 
@@ -555,8 +561,10 @@ applicationEntry = tk.Entry(root, width="40", fg="black", bg="white", font=("Hel
 ErrorLabel1 = tk.Label(root, text="", bg="white", fg="red", font=("Helvetica", 12, "bold"))
 messageListBox = tk.Listbox(root, bg="white", fg="black", font=("Helvetica", 10), height=28, width=80)
 searchEntry = tk.Entry(root, width=30, font=("Helvetica", 12), bg="white", fg="black")
-searchButton = tk.Button(root, text="Search", bg="white", fg="black", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(searchButton))
-cancelButton = tk.Button(root, text="Cancel", bg="white", fg="black", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(cancelButton))
+searchImage = tk.PhotoImage(file="Search.png")
+searchButton = tk.Button(root, text="Search", bg="white", fg="black", font=("Helvetica", 10), cursor="hand2", image=searchImage, command=lambda: Function(searchButton))
+cancelImage = tk.PhotoImage(file="Cancel.png")
+cancelButton = tk.Button(root, text="Cancel", bg="white", fg="black", font=("Helvetica", 10), cursor="hand2", image=cancelImage, command=lambda: Function(cancelButton))
 detailsLabel = tk.Label(root, text="", bg="white", fg="green", font=("Brush Script M7", 20))
 recentLoginLabel = tk.Label(root, text="Recent Login : None", bg="white", fg="black", font=("Helvetica", 12))
 root.mainloop()
