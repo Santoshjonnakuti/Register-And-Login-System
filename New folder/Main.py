@@ -47,6 +47,7 @@ def Function(button):
                 return
     elif text == "Delete Account":
         string = "Delete Account"
+        showPasswordButton.place_forget()
         recentLoginLabel.place_forget()
         cancelButton.place_forget()
         detailsLabel.place_forget()
@@ -118,6 +119,8 @@ def Function(button):
         Label3.place(x=350, y=400, anchor=tk.CENTER)
         Entry2.delete(0, tk.END)
         Entry2.place(x=485, y=450, anchor=tk.CENTER)
+        showPasswordButton["text"] = "Show Password"
+        showPasswordButton.place(x=700, y=450, anchor=tk.CENTER)
         Button1["text"] = "Log in"
         Button1.place(x=327, y=550, anchor=tk.CENTER)
         Button2["text"] = "Forgot Password?"
@@ -248,6 +251,8 @@ def Function(button):
             Entry2.place_forget()
             ErrorLabel.place_forget()
             Button3.place_forget()
+            showPasswordButton.place_forget()
+            Entry2["show"] = ""
             searchEntry.place(x=200, y=280, anchor=tk.CENTER)
             searchButton.place(x=370, y=280, anchor=tk.CENTER)
             addButton.place(x=80, y=200, anchor=tk.CENTER)
@@ -505,6 +510,16 @@ def Function(button):
             messageListBox.insert(i, msg[i])
         messageListBox.place(x=350, y=550, anchor=tk.CENTER)
         return
+    elif text == "Show Password":
+        button["text"] = "Hide Password"
+        button["image"] = HidePasswordImage
+        Entry2["show"] = ""
+        return
+    elif text == "Hide Password":
+        Entry2["show"] = "*"
+        button["text"] = "Show Password"
+        button["image"] = showPasswordImage
+        return
 
 
 root = tk.Tk()
@@ -524,7 +539,7 @@ Entry1 = tk.Entry(root, width=40, font=("Helvetica", 13))
 Entry1.place(x=485, y=350, anchor=tk.CENTER)
 Label3 = tk.Label(root, text="Password", bg="white", fg="black", font=("Helvetica", 15))
 Label3.place(x=350, y=400, anchor=tk.CENTER)
-Entry2 = tk.Entry(root, width=40, font=("Helvetica", 13))
+Entry2 = tk.Entry(root, width=40, font=("Helvetica", 13), show="*")
 Entry2.place(x=485, y=450, anchor=tk.CENTER)
 Button1 = tk.Button(root, text="Log in", bg="white", fg="black", compound="left", cursor="hand2", command=lambda: Function(Button1))
 Button1.place(x=327, y=550, anchor=tk.CENTER)
@@ -532,6 +547,10 @@ Button2 = tk.Button(root, text="Forgot Password?", bg="white", fg="blue", cursor
 Button2.place(x=608, y=500, anchor=tk.CENTER)
 Button3 = tk.Button(root, text="Don't have an account? Sign Up", fg="blue", bg="white", font=("Helvetica", 10), cursor="hand2", command=lambda: Function(Button3))
 Button3.place(x=400, y=600, anchor=tk.CENTER)
+showPasswordImage = tk.PhotoImage(file="ShowPassword.png")
+HidePasswordImage = tk.PhotoImage(file="HidePassword.png")
+showPasswordButton = tk.Button(root, text="Show Password", bg="white", fg="black", image=showPasswordImage, command=lambda: Function(showPasswordButton))
+showPasswordButton.place(x=700, y=450, anchor=tk.CENTER)
 ErrorLabel = tk.Label(root, text="", fg="red", bg="white", font=("Helvetica", 15, "bold"))
 firstNameLabel = tk.Label(root, text="Firstname", bg="white", fg="black", font=("Helvetica", 12))
 firstNameEntry = tk.Entry(root, width=30, font=("Helvetica", 12))
