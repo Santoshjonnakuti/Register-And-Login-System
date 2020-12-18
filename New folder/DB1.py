@@ -29,7 +29,7 @@ def showAll(user):
     rows = cur.fetchall()
     conn.commit()
     conn.close()
-    string = "Application" + (" "*29) + "Username" + (" "*32) + "Password" + (" "*32) + "\n"
+    string = "Application" + (" "*29) + "Username" + (" "*32) + "Password" + "\n"
     for row in rows:
         application = str(row[1])
         application = application + " "*(40-len(application))
